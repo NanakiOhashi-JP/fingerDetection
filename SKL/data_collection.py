@@ -17,10 +17,10 @@ def record_and_split_frames():
     # Webカメラを起動 (0はデフォルトのカメラ)
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
-        print("❌ エラー: Webカメラを起動できませんでした。")
+        print("エラー: Webカメラを起動できませんでした。")
         return
 
-    print("📷 Webカメラを起動しました。")
+    print("Webカメラを起動しました。")
 
     while True:
         # 待機中の画面を表示
@@ -53,13 +53,13 @@ def record_and_split_frames():
             out = cv2.VideoWriter(filename, fourcc, fps, (width, height))
 
             cv2.destroyWindow("Webcam - Press key to start") # 待機ウィンドウを閉じる
-            print(f"\n▶️ 撮影を開始します... (ファイル名: {filename})")
-            print("🔴 撮影ウィンドウで 'q' を押すと撮影を終了します。")
+            print(f"\n撮影を開始します... (ファイル名: {filename})")
+            print("撮影ウィンドウで 'q' を押すと撮影を終了します。")
 
             while True:
                 ret, frame = cap.read()
                 if not ret:
-                    print("❌ エラー: フレームのキャプチャに失敗しました。")
+                    print("エラー: フレームのキャプチャに失敗しました。")
                     break
                 
                 # 映像をファイルに書き込む
@@ -75,7 +75,7 @@ def record_and_split_frames():
             # リソースを解放
             out.release()
             cv2.destroyAllWindows()
-            print(f"⏹️ 撮影を終了し、'{filename}' を保存しました。")
+            print(f"撮影を終了し、'{filename}' を保存しました。")
             print("\n----------------------------------------")
             print("次の操作を入力してください...")
 
@@ -95,7 +95,7 @@ def record_and_split_frames():
         print("\nフレーム分割対象の動画がありませんでした。")
         return
 
-    print("\n🎞️ 撮影した動画をフレームに分割します...")
+    print("\n撮影した動画をフレームに分割します...")
     print("----------------------------------------")
 
     for video_path in recorded_files:
@@ -105,12 +105,12 @@ def record_and_split_frames():
         # フォルダを作成 (存在しない場合)
         if not os.path.exists(folder_name):
             os.makedirs(folder_name)
-            print(f"📁 '{folder_name}' フォルダを作成しました。")
+            print(f"'{folder_name}' フォルダを作成しました。")
 
         # 動画を読み込み
         vid_cap = cv2.VideoCapture(video_path)
         if not vid_cap.isOpened():
-            print(f"❌ エラー: '{video_path}' を開けませんでした。")
+            print(f"エラー: '{video_path}' を開けませんでした。")
             continue
 
         frame_count = 0
@@ -121,13 +121,14 @@ def record_and_split_frames():
             
             # フレームを画像として保存 (例: 1-1/0.jpg, 1-1/1.jpg ...)
             frame_filename = os.path.join(folder_name, f"{frame_count}.jpg")
-            cv2.imwrite(frame_filename, frame)
+            # JPEG品質を30%に設定して画質を下げる（デフォルトは95%）
+            cv2.imwrite(frame_filename, frame, [cv2.IMWRITE_JPEG_QUALITY, 30])
             frame_count += 1
         
         vid_cap.release()
-        print(f"✅ '{video_path}' を {frame_count} フレームに分割しました。")
+        print(f"'{video_path}' を {frame_count} フレームに分割しました。")
 
 # --- メイン処理の実行 ---
 if __name__ == '__main__':
     record_and_split_frames()
-    print("\n✨ すべての処理が完了しました。")
+    print("\nすべての処理が完了しました。")

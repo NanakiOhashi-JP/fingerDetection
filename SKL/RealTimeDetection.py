@@ -1,4 +1,4 @@
-# リアルタイムで指の本数を判別（連続予測版）
+# リアルタイムで指の本数を判別
 
 import cv2
 import numpy as np
@@ -15,12 +15,12 @@ class RealTimeFingerDetector:
         self.prediction_history = []
         self.history_size = 5  # 過去5回の予測を保持
         self.last_prediction_time = 0
-        self.prediction_interval = 0.5  # 0.5秒間隔で予測
+        self.prediction_interval = 0.5  # 秒間隔で予測
         
-        print("リアルタイム指検出器を初期化しました！")
+        print("リアルタイム指検出器を初期化")
     
     def preprocess_image(self, image, target_size=(64, 64)):
-        """画像を前処理"""
+        """画像の前処理"""
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         resized = cv2.resize(gray, target_size)
         return resized.flatten()
@@ -47,7 +47,7 @@ class RealTimeFingerDetector:
             print("エラー: Webカメラが開けません")
             return
         
-        print("リアルタイム指検出を開始！")
+        print("リアルタイム指検出を開始")
         print("'q'キーで終了")
         
         current_prediction = 0
@@ -112,7 +112,6 @@ def main():
         
     except FileNotFoundError:
         print(f"エラー: モデルファイル '{model_path}' が見つかりません")
-        print("Google Driveからfinger_model.pklをダウンロードしてください")
     except Exception as e:
         print(f"エラーが発生しました: {e}")
 
