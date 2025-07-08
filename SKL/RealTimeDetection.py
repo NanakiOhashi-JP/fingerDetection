@@ -104,7 +104,7 @@ class RealTimeFingerDetector:
         print("リアルタイム検出を終了しました")
 
 def main():
-    model_path = "finger_model_combined.pkl"
+    model_path = "finger_model_all_combined.pkl"
     
     try:
         detector = RealTimeFingerDetector(model_path)

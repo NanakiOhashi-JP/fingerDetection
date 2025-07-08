@@ -26,7 +26,7 @@ def record_and_split_frames():
         # 待機中の画面を表示
         ret, frame = cap.read()
         if not ret:
-            print("❌ エラー: フレームを取得できませんでした。")
+            print("エラー: フレームを取得できませんでした。")
             break
         
         # 画面に操作説明を表示
